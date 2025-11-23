@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Ilham & Sanjay Color Challenge</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -11,6 +13,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            touch-action: manipulation;
         }
         
         body {
@@ -19,31 +22,36 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 10px;
             overflow: hidden;
             color: #e0e0ff;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .game-container {
-            background: rgba(15, 15, 35, 0.92);
-            border-radius: 24px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
-            padding: 30px;
+            background: rgba(15, 15, 35, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 20px;
             width: 100%;
-            max-width: 580px;
+            max-width: 500px;
             text-align: center;
             position: relative;
             overflow: hidden;
             border: 2px solid rgba(100, 150, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            min-height: 95vh;
         }
         
         .header {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             position: relative;
         }
         
         h1 {
-            font-size: 2.6rem;
+            font-size: 1.8rem;
             margin-bottom: 5px;
             background: linear-gradient(45deg, #00a8ff, #ff6b9c, #7afcff, #ff7eb3);
             -webkit-background-clip: text;
@@ -52,7 +60,7 @@
             animation: gradientShift 8s ease infinite;
             font-weight: 800;
             letter-spacing: -0.5px;
-            text-shadow: 0 0 10px rgba(122, 252, 255, 0.2);
+            text-shadow: 0 0 8px rgba(122, 252, 255, 0.2);
         }
         
         @keyframes gradientShift {
@@ -63,24 +71,24 @@
         
         .subtitle {
             color: #a0b0ff;
-            font-size: 1.15rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .names {
             display: flex;
             justify-content: center;
-            gap: 25px;
-            margin: 15px 0;
+            gap: 15px;
+            margin: 10px 0;
         }
         
         .name-badge {
-            padding: 8px 20px;
-            border-radius: 30px;
+            padding: 6px 15px;
+            border-radius: 25px;
             font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 10px rgba(0, 168, 255, 0.3);
+            font-size: 1rem;
+            box-shadow: 0 3px 8px rgba(0, 168, 255, 0.3);
             animation: float 3s ease-in-out infinite;
             color: white;
         }
@@ -89,165 +97,172 @@
             background: linear-gradient(45deg, #00a8ff, #00d2ff);
             font-weight: 800;
             letter-spacing: 0.5px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
         
         .name-badge.sanjay {
             background: linear-gradient(45deg, #ff6b9c, #ff7eb3);
-            box-shadow: 0 4px 10px rgba(255, 107, 156, 0.3);
+            box-shadow: 0 3px 8px rgba(255, 107, 156, 0.3);
             animation-delay: 1.5s;
         }
         
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-6px); }
         }
         
         .mode-selector {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 15px 0;
             flex-wrap: wrap;
         }
         
         .mode-btn {
-            padding: 12px 24px;
+            padding: 10px 18px;
             border: none;
-            border-radius: 50px;
+            border-radius: 25px;
             background: rgba(40, 40, 70, 0.6);
             color: #d0d0ff;
-            font-size: 1.05rem;
+            font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             border: 2px solid rgba(100, 120, 200, 0.3);
             flex: 1;
-            min-width: 140px;
+            min-width: 120px;
+            max-width: 180px;
         }
         
         .mode-btn.active {
             background: linear-gradient(45deg, #00a8ff, #00d2ff);
             color: white;
             border-color: #00a8ff;
-            box-shadow: 0 5px 15px rgba(0, 168, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.4);
         }
         
         .mode-btn.active.word {
             background: linear-gradient(45deg, #ff6b9c, #ff7eb3);
             border-color: #ff6b9c;
-            box-shadow: 0 5px 15px rgba(255, 107, 156, 0.4);
+            box-shadow: 0 4px 12px rgba(255, 107, 156, 0.4);
         }
         
         .mode-btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             background: rgba(50, 50, 80, 0.7);
         }
         
         .instructions-box {
             background: rgba(25, 25, 50, 0.7);
-            padding: 18px;
-            border-radius: 16px;
-            margin: 20px 0;
+            padding: 15px;
+            border-radius: 14px;
+            margin: 15px 0;
             color: #c0c0ff;
-            font-size: 1rem;
-            line-height: 1.6;
+            font-size: 0.9rem;
+            line-height: 1.5;
             border: 2px solid rgba(100, 150, 255, 0.2);
         }
         
         .keyboard-hint {
             background: rgba(30, 30, 60, 0.7);
-            padding: 10px;
-            border-radius: 10px;
-            margin-top: 10px;
-            font-size: 0.9rem;
+            padding: 8px;
+            border-radius: 8px;
+            margin-top: 8px;
+            font-size: 0.8rem;
             color: #ffd166;
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
         }
         
         .key-hint {
             background: rgba(50, 50, 100, 0.5);
-            padding: 3px 8px;
-            border-radius: 6px;
+            padding: 2px 6px;
+            border-radius: 5px;
             font-weight: bold;
         }
         
         .stats {
             display: flex;
             justify-content: space-around;
-            margin: 20px 0;
+            margin: 15px 0;
             background: rgba(20, 20, 45, 0.7);
-            padding: 15px;
-            border-radius: 18px;
+            padding: 12px;
+            border-radius: 16px;
             border: 2px solid rgba(100, 150, 255, 0.2);
         }
         
         .stat-box {
             color: #a0b0ff;
             font-weight: 600;
+            font-size: 0.85rem;
         }
         
         .stat-value {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: 800;
             color: #00a8ff;
-            margin-top: 5px;
-            text-shadow: 0 0 8px rgba(0, 168, 255, 0.3);
+            margin-top: 3px;
+            text-shadow: 0 0 6px rgba(0, 168, 255, 0.3);
         }
         
         .stat-value.word {
             color: #ff6b9c;
-            text-shadow: 0 0 8px rgba(255, 107, 156, 0.3);
+            text-shadow: 0 0 6px rgba(255, 107, 156, 0.3);
         }
         
         .game-area {
             position: relative;
-            height: 210px;
-            margin: 25px 0;
+            height: 160px;
+            margin: 20px 0;
             background: rgba(10, 10, 30, 0.7);
-            border-radius: 20px;
+            border-radius: 16px;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 3px dashed rgba(100, 150, 255, 0.2);
+            border: 2px dashed rgba(100, 150, 255, 0.2);
+            flex: 1;
+            min-height: 140px;
         }
         
         .color-word {
-            font-size: 4.8rem;
+            font-size: 3.2rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            word-break: break-all;
         }
         
         .options {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
-            margin-top: 25px;
-            min-height: 100px;
+            margin: 20px 0;
+            min-height: 80px;
             position: relative;
         }
         
         .color-option {
-            width: 75px;
-            height: 75px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             position: relative;
-            border: 3px solid rgba(200, 200, 255, 0.2);
+            border: 2px solid rgba(200, 200, 255, 0.2);
             transform: scale(0.95);
+            touch-action: manipulation;
         }
         
         .color-option:hover, .color-option.selected {
             transform: scale(1.15);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
             z-index: 2;
             border-color: #ffd166;
         }
@@ -255,14 +270,17 @@
         .color-option::after {
             content: attr(data-color);
             position: absolute;
-            bottom: -30px;
+            bottom: -25px;
             left: 50%;
             transform: translateX(-50%);
             color: #e0e0ff;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
             white-space: nowrap;
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         /* Hide color names in Word Meaning mode */
@@ -272,27 +290,27 @@
         
         .key-number {
             position: absolute;
-            top: -20px;
+            top: -18px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(0, 0, 0, 0.7);
             color: white;
-            width: 25px;
-            height: 25px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             border: 2px solid #ffd166;
         }
         
         .timer-bar {
-            height: 12px;
+            height: 10px;
             background: rgba(40, 40, 70, 0.6);
-            border-radius: 6px;
-            margin: 25px 0;
+            border-radius: 5px;
+            margin: 20px 0;
             overflow: hidden;
             border: 2px solid rgba(100, 150, 255, 0.2);
         }
@@ -301,7 +319,7 @@
             height: 100%;
             width: 100%;
             background: linear-gradient(90deg, #00a8ff, #00d2ff);
-            border-radius: 6px;
+            border-radius: 5px;
             transition: width 0.1s linear;
         }
         
@@ -312,45 +330,45 @@
         .controls {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
+            gap: 12px;
+            margin: 15px 0;
         }
         
         .btn {
-            padding: 12px 25px;
-            font-size: 1.1rem;
-            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 25px;
             cursor: pointer;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             border: none;
-            min-width: 140px;
+            min-width: 120px;
         }
         
         .btn.start {
             background: linear-gradient(45deg, #00a8ff, #00d2ff);
             color: white;
-            box-shadow: 0 6px 15px rgba(0, 168, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.4);
         }
         
         .btn.pause {
             background: linear-gradient(45deg, #ff6b9c, #ff7eb3);
             color: white;
-            box-shadow: 0 6px 15px rgba(255, 107, 156, 0.4);
+            box-shadow: 0 4px 12px rgba(255, 107, 156, 0.4);
         }
         
         .btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
         
         .btn.start:hover {
-            box-shadow: 0 8px 20px rgba(0, 168, 255, 0.6);
+            box-shadow: 0 6px 16px rgba(0, 168, 255, 0.6);
         }
         
         .btn.pause:hover {
-            box-shadow: 0 8px 20px rgba(255, 107, 156, 0.6);
+            box-shadow: 0 6px 16px rgba(255, 107, 156, 0.6);
         }
         
         .btn:active {
@@ -372,7 +390,8 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.5s ease;
-            border-radius: 24px;
+            border-radius: 20px;
+            padding: 20px;
         }
         
         .game-over.show {
@@ -381,17 +400,17 @@
         }
         
         .game-over h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
             color: #00a8ff;
             font-weight: 800;
-            text-shadow: 0 0 15px rgba(0, 168, 255, 0.4);
+            text-shadow: 0 0 12px rgba(0, 168, 255, 0.4);
         }
         
         .final-score {
             color: #c0c0ff;
-            font-size: 1.8rem;
-            margin: 15px 0;
+            font-size: 1.5rem;
+            margin: 12px 0;
             font-weight: 700;
         }
         
@@ -406,12 +425,12 @@
         
         .mode-display {
             background: rgba(25, 25, 50, 0.7);
-            padding: 10px 20px;
-            border-radius: 30px;
+            padding: 8px 16px;
+            border-radius: 25px;
             font-weight: 700;
             color: #00a8ff;
-            margin: 20px 0;
-            font-size: 1.1rem;
+            margin: 15px 0;
+            font-size: 1rem;
             border: 2px solid rgba(100, 150, 255, 0.2);
         }
         
@@ -422,37 +441,39 @@
         
         .confetti {
             position: absolute;
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             opacity: 0;
         }
         
         .high-score-display {
             background: rgba(30, 30, 60, 0.7);
-            padding: 12px;
-            border-radius: 12px;
-            margin: 15px 0;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 12px 0;
             font-weight: 700;
             color: #ffd166;
-            border-left: 4px solid #ffd166;
+            border-left: 3px solid #ffd166;
+            font-size: 0.95rem;
         }
         
         .sound-toggle {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 15px;
+            right: 15px;
             background: rgba(40, 40, 70, 0.7);
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             color: #a0d2eb;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 5;
         }
         
         .sound-toggle.muted {
@@ -462,15 +483,16 @@
         .made-by {
             background: linear-gradient(45deg, #00a8ff, #ff6b9c);
             color: white;
-            padding: 12px;
-            border-radius: 15px;
-            margin-top: 20px;
+            padding: 10px;
+            border-radius: 12px;
+            margin-top: auto;
             font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+            font-size: 0.95rem;
+            box-shadow: 0 3px 10px rgba(0, 168, 255, 0.3);
             animation: pulse 2s infinite;
             position: relative;
             overflow: hidden;
+            margin-bottom: 5px;
         }
         
         .made-by::before {
@@ -486,19 +508,43 @@
         
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
+            50% { transform: scale(1.02); }
         }
         
-        @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .color-word { font-size: 3.8rem; }
-            .color-option { width: 65px; height: 65px; }
-            .stats { flex-direction: column; gap: 12px; }
-            .names { flex-direction: column; align-items: center; gap: 10px; }
-            .mode-btn { min-width: 120px; padding: 10px 15px; font-size: 0.95rem; }
-            .btn { min-width: 120px; padding: 10px 15px; font-size: 1rem; }
-            .key-number { display: none; }
-            .keyboard-hint { display: none; }
+        /* Desktop improvements */
+        @media (min-width: 768px) {
+            .game-container {
+                padding: 25px;
+                min-height: auto;
+            }
+            
+            h1 { font-size: 2.4rem; }
+            .subtitle { font-size: 1.15rem; }
+            .names { gap: 25px; }
+            .name-badge { padding: 8px 20px; font-size: 1.1rem; }
+            .mode-btn { padding: 12px 24px; font-size: 1.05rem; min-width: 140px; }
+            .instructions-box { font-size: 1rem; padding: 18px; }
+            .stat-value { font-size: 2rem; }
+            .game-area { height: 210px; }
+            .color-word { font-size: 4.8rem; }
+            .color-option { width: 75px; height: 75px; }
+            .color-option::after { font-size: 0.85rem; bottom: -30px; }
+            .key-number { width: 25px; height: 25px; top: -20px; }
+            .btn { padding: 12px 25px; font-size: 1.1rem; min-width: 140px; }
+            .game-over h2 { font-size: 2.8rem; }
+            .final-score { font-size: 1.8rem; }
+            .made-by { padding: 12px; font-size: 1.1rem; }
+        }
+        
+        /* Hide keyboard hint on mobile */
+        @media (max-width: 767px) {
+            .keyboard-hint {
+                display: none;
+            }
+            
+            .key-number {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -524,8 +570,8 @@
         <div class="mode-display" id="mode-display">Mode: Match the TEXT COLOR</div>
         
         <div class="instructions-box" id="instructions">
-            <p><strong>Text Color Mode</strong>: Click the circle that matches the COLOR of the text.</p>
-            <p>Example: If "GREEN" appears in <span style="color: #ff9800; font-weight: bold">orange</span> text, click the ORANGE circle.</p>
+            <p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p>
+            <p>Example: If "GREEN" appears in <span style="color: #ff9800; font-weight: bold">orange</span> text, tap the ORANGE circle.</p>
             <div class="keyboard-hint">
                 <span>Play with keys:</span>
                 <span class="key-hint">1</span>
@@ -572,7 +618,7 @@
             <div class="final-score">Your Score: <span id="final-score">0</span></div>
             <div class="final-score">Level Reached: <span id="final-level">1</span></div>
             <div class="final-score high">High Score: <span id="final-high-score">0</span></div>
-            <div class="mode-selector" style="margin: 25px 0;">
+            <div class="mode-selector" style="margin: 20px 0;">
                 <button class="mode-btn" id="gameover-text-color">Text Color</button>
                 <button class="mode-btn" id="gameover-word-meaning">Word Meaning</button>
             </div>
@@ -617,6 +663,7 @@
         let soundBuffers = {};
         let backgroundMusic = null;
         let isBackgroundMusicPlaying = false;
+        let backgroundMusicSource = null;
         
         // Simple, common colors that everyone knows
         const colors = ['Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Pink', 'Purple', 'Black', 'White', 'Brown', 'Gray', 'Cyan'];
@@ -654,6 +701,21 @@
         // Update displays
         bestDisplay.textContent = bestScore;
         highScoreDisplay.textContent = `High Score: ${highScore}`;
+        
+        // Prevent zoom on mobile
+        document.addEventListener('touchmove', function(event) {
+            if (event.scale !== 1) { event.preventDefault(); }
+        }, { passive: false });
+        
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(function() {
+                // Force reflow
+                document.body.style.display = 'none';
+                document.body.offsetHeight;
+                document.body.style.display = '';
+            }, 100);
+        });
         
         // Initialize Web Audio API
         async function initAudio() {
@@ -980,7 +1042,11 @@
         // Stop background music
         function stopBackgroundMusic() {
             if (backgroundMusicSource) {
-                backgroundMusicSource.stop();
+                try {
+                    backgroundMusicSource.stop();
+                } catch (e) {
+                    // Ignore if already stopped
+                }
                 isBackgroundMusicPlaying = false;
             }
         }
@@ -1114,12 +1180,12 @@
             if (currentMode === 'text-color') {
                 modeDisplay.textContent = 'Mode: Match the TEXT COLOR';
                 modeDisplay.className = 'mode-display';
-                instructions.innerHTML = '<p><strong>Text Color Mode</strong>: Click the circle that matches the COLOR of the text.</p><p>Example: If "GREEN" appears in <span style="color: #ff9800; font-weight: bold">orange</span> text, click the ORANGE circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
+                instructions.innerHTML = '<p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p><p>Example: If "GREEN" appears in <span style="color: #ff9800; font-weight: bold">orange</span> text, tap the ORANGE circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
                 timerFill.className = 'timer-fill';
             } else {
                 modeDisplay.textContent = 'Mode: Match the WORD MEANING';
                 modeDisplay.className = 'mode-display word';
-                instructions.innerHTML = '<p><strong>Word Meaning Mode</strong>: Click the circle that matches what the WORD says.</p><p>Example: If "GREEN" appears in <span style="color: #ff9800; font-weight: bold">orange</span> text, click the GREEN circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
+                instructions.innerHTML = '<p><strong>Word Meaning Mode</strong>: Tap the circle that matches what the WORD says.</p><p>Example: If "GREEN" appears in <span style="color: #ff9800; font-weight: bold">orange</span> text, tap the GREEN circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
                 timerFill.className = 'timer-fill word';
             }
         }
@@ -1192,18 +1258,23 @@
                 option.className = 'color-option';
                 option.style.backgroundColor = colorValues[color];
                 if (color === 'White' || color === 'Yellow') {
-                    option.style.border = '3px solid #555555';
+                    option.style.border = '2px solid #555555';
                 }
                 option.dataset.color = color;
                 option.dataset.index = index;
                 option.addEventListener('click', checkAnswer);
+                option.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); // Prevent double tap zoom
+                });
                 colorOptions.appendChild(option);
                 
-                // Add key number indicator
-                const keyNumber = document.createElement('div');
-                keyNumber.className = 'key-number';
-                keyNumber.textContent = index + 1;
-                option.appendChild(keyNumber);
+                // Add key number indicator (only on desktop)
+                if (window.innerWidth > 767) {
+                    const keyNumber = document.createElement('div');
+                    keyNumber.className = 'key-number';
+                    keyNumber.textContent = index + 1;
+                    option.appendChild(keyNumber);
+                }
             });
             
             // Start timer
@@ -1300,9 +1371,9 @@
             }
         }
         
-        // Keyboard control handler
+        // Keyboard control handler (only on desktop)
         function handleKeyPress(event) {
-            if (!gameActive || gamePaused) return;
+            if (!gameActive || gamePaused || window.innerWidth <= 767) return;
             
             const key = event.key;
             if (key >= '1' && key <= '4') {
@@ -1438,8 +1509,8 @@
                 confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
                 confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
                 confetti.style.opacity = Math.random() * 0.8 + 0.2;
-                confetti.style.width = Math.random() * 10 + 5 + 'px';
-                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.width = Math.random() * 8 + 4 + 'px';
+                confetti.style.height = Math.random() * 8 + 4 + 'px';
                 gameArea.appendChild(confetti);
                 
                 // Animate confetti
@@ -1469,6 +1540,13 @@
         
         // Initialize mode buttons on load
         initializeModeButtons();
+        
+        // Prevent double tap zoom on mobile
+        document.addEventListener('touchstart', function() {
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }, { once: true });
     </script>
 </body>
 </html>
