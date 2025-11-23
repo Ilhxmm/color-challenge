@@ -571,7 +571,7 @@
         
         <div class="instructions-box" id="instructions">
             <p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p>
-            <p>Example: If "GREEN" appears in <span style="color: #ff9800; font-weight: bold">orange</span> text, tap the ORANGE circle.</p>
+            <p>Example: If "RED" appears in <span style="color: #00ff00; font-weight: bold">green</span> text, tap the GREEN circle.</p>
             <div class="keyboard-hint">
                 <span>Play with keys:</span>
                 <span class="key-hint">1</span>
@@ -665,22 +665,18 @@
         let isBackgroundMusicPlaying = false;
         let backgroundMusicSource = null;
         
-        // Simple, common colors that everyone knows
-        const colors = ['Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Pink', 'Purple', 'Black', 'White', 'Brown', 'Gray', 'Cyan'];
+        // SIMPLE, UNIVERSAL COLORS THAT EVERYONE KNOWS
+        const colors = ['Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Purple', 'Pink', 'Black'];
         
         const colorValues = {
-            'Red': '#f44336',
-            'Blue': '#2196f3',
-            'Green': '#4caf50',
+            'Red': '#e53935',
+            'Blue': '#1e88e5',
+            'Green': '#43a047',
             'Yellow': '#ffeb3b',
-            'Orange': '#ff9800',
+            'Orange': '#fb8c00',
+            'Purple': '#8e24aa',
             'Pink': '#e91e63',
-            'Purple': '#9c27b0',
-            'Black': '#222222',
-            'White': '#ffffff',
-            'Brown': '#795548',
-            'Gray': '#9e9e9e',
-            'Cyan': '#00bcd4'
+            'Black': '#212121'
         };
         
         // Game variables
@@ -1180,12 +1176,12 @@
             if (currentMode === 'text-color') {
                 modeDisplay.textContent = 'Mode: Match the TEXT COLOR';
                 modeDisplay.className = 'mode-display';
-                instructions.innerHTML = '<p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p><p>Example: If "GREEN" appears in <span style="color: #ff9800; font-weight: bold">orange</span> text, tap the ORANGE circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
+                instructions.innerHTML = '<p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p><p>Example: If "RED" appears in <span style="color: #00ff00; font-weight: bold">green</span> text, tap the GREEN circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
                 timerFill.className = 'timer-fill';
             } else {
                 modeDisplay.textContent = 'Mode: Match the WORD MEANING';
                 modeDisplay.className = 'mode-display word';
-                instructions.innerHTML = '<p><strong>Word Meaning Mode</strong>: Tap the circle that matches what the WORD says.</p><p>Example: If "GREEN" appears in <span style="color: #ff9800; font-weight: bold">orange</span> text, tap the GREEN circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
+                instructions.innerHTML = '<p><strong>Word Meaning Mode</strong>: Tap the circle that matches what the WORD says.</p><p>Example: If "RED" appears in <span style="color: #00ff00; font-weight: bold">green</span> text, tap the RED circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
                 timerFill.className = 'timer-fill word';
             }
         }
@@ -1257,7 +1253,7 @@
                 const option = document.createElement('div');
                 option.className = 'color-option';
                 option.style.backgroundColor = colorValues[color];
-                if (color === 'White' || color === 'Yellow') {
+                if (color === 'Yellow') {
                     option.style.border = '2px solid #555555';
                 }
                 option.dataset.color = color;
@@ -1468,8 +1464,7 @@
             }
             
             // Fallback for white/black which might not have # in some browsers
-            if (hex === 'white' || hex === '#ffffff') return 'White';
-            if (hex === 'black' || hex === '#000000' || hex === '#222222') return 'Black';
+            if (hex === 'black' || hex === '#000000' || hex === '#212121') return 'Black';
             
             return null;
         }
@@ -1498,7 +1493,7 @@
         
         // Create confetti effect
         function createConfetti() {
-            const colors = ['#f44336', '#2196f3', '#4caf50', '#ffeb3b', '#ff9800', '#e91e63'];
+            const colors = ['#e53935', '#1e88e5', '#43a047', '#ffeb3b', '#fb8c00', '#e91e63'];
             const gameArea = document.querySelector('.game-container');
             
             for (let i = 0; i < 100; i++) {
