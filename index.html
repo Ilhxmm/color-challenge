@@ -459,6 +459,36 @@
             color: #ff6b9c;
         }
         
+        .made-by {
+            background: linear-gradient(45deg, #00a8ff, #ff6b9c);
+            color: white;
+            padding: 12px;
+            border-radius: 15px;
+            margin-top: 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 168, 255, 0.3);
+            animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .made-by::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            z-index: -1;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+        
         @media (max-width: 600px) {
             h1 { font-size: 2.2rem; }
             .color-word { font-size: 3.8rem; }
@@ -548,6 +578,10 @@
             </div>
             <button class="btn start" id="restart-btn">Play Again</button>
         </div>
+        
+        <div class="made-by">
+            🏆 Created with ❤️ by Ilham & Sanjay 🏆
+        </div>
     </div>
 
     <script>
@@ -581,6 +615,8 @@
         let soundEnabled = true;
         let audioContext;
         let soundBuffers = {};
+        let backgroundMusic = null;
+        let isBackgroundMusicPlaying = false;
         
         // Simple, common colors that everyone knows
         const colors = ['Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Pink', 'Purple', 'Black', 'White', 'Brown', 'Gray', 'Cyan'];
@@ -626,6 +662,9 @@
                 
                 // Create high-quality sound buffers
                 await createSoundBuffers();
+                
+                // Create background music
+                createBackgroundMusic();
             } catch (e) {
                 console.log("Web Audio API not supported");
                 soundEnabled = false;
@@ -653,6 +692,55 @@
             
             // Timer Warning Sound - Subtle alert
             soundBuffers.timerWarning = createTimerWarningSound();
+        }
+        
+        // Create background music
+        function createBackgroundMusic() {
+            const sampleRate = audioContext.sampleRate;
+            const duration = 8.0; // 8 seconds loop
+            const length = Math.floor(duration * sampleRate);
+            const buffer = audioContext.createBuffer(1, length, sampleRate);
+            const data = buffer.getChannelData(0);
+            
+            // Ambient background music with gentle arpeggios
+            for (let i = 0; i < length; i++) {
+                const t = i / sampleRate;
+                const cycle = t % 4; // 4-second cycle within 8-second loop
+                
+                let amplitude = 0;
+                
+                // Gentle arpeggio pattern
+                if (cycle < 0.5) {
+                    // C4
+                    amplitude = Math.sin(2 * Math.PI * 261.63 * t) * Math.exp(-cycle * 2);
+                } else if (cycle < 1.0) {
+                    // E4
+                    amplitude = Math.sin(2 * Math.PI * 329.63 * t) * Math.exp(-(cycle - 0.5) * 2);
+                } else if (cycle < 1.5) {
+                    // G4
+                    amplitude = Math.sin(2 * Math.PI * 392 * t) * Math.exp(-(cycle - 1.0) * 2);
+                } else if (cycle < 2.0) {
+                    // C5
+                    amplitude = Math.sin(2 * Math.PI * 523.25 * t) * Math.exp(-(cycle - 1.5) * 2);
+                } else if (cycle < 2.5) {
+                    // A4
+                    amplitude = Math.sin(2 * Math.PI * 440 * t) * Math.exp(-(cycle - 2.0) * 2);
+                } else if (cycle < 3.0) {
+                    // F4
+                    amplitude = Math.sin(2 * Math.PI * 349.23 * t) * Math.exp(-(cycle - 2.5) * 2);
+                } else if (cycle < 3.5) {
+                    // D4
+                    amplitude = Math.sin(2 * Math.PI * 293.66 * t) * Math.exp(-(cycle - 3.0) * 2);
+                } else {
+                    // G4
+                    amplitude = Math.sin(2 * Math.PI * 392 * t) * Math.exp(-(cycle - 3.5) * 2);
+                }
+                
+                // Very low volume for background music
+                data[i] = amplitude * 0.15;
+            }
+            
+            backgroundMusic = buffer;
         }
         
         // Create a beautiful bell-like sound
@@ -868,6 +956,35 @@
             }
         }
         
+        // Play background music loop
+        function playBackgroundMusic() {
+            if (!soundEnabled || !audioContext || !backgroundMusic || isBackgroundMusicPlaying) return;
+            
+            const source = audioContext.createBufferSource();
+            const gainNode = audioContext.createGain();
+            
+            source.buffer = backgroundMusic;
+            source.loop = true;
+            gainNode.gain.value = 0.3; // Very low volume
+            
+            source.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            source.start();
+            isBackgroundMusicPlaying = true;
+            
+            // Store reference to stop later
+            backgroundMusicSource = source;
+        }
+        
+        // Stop background music
+        function stopBackgroundMusic() {
+            if (backgroundMusicSource) {
+                backgroundMusicSource.stop();
+                isBackgroundMusicPlaying = false;
+            }
+        }
+        
         // Sound effects
         function playCorrectSound() {
             playSoundFromBuffer(soundBuffers.correct, 0.7);
@@ -883,9 +1000,13 @@
         
         function playGameStartSound() {
             playSoundFromBuffer(soundBuffers.gameStart, 1.0);
+            if (soundEnabled) {
+                setTimeout(playBackgroundMusic, 500);
+            }
         }
         
         function playGameOverSound() {
+            stopBackgroundMusic();
             playSoundFromBuffer(soundBuffers.gameOver, 0.8);
         }
         
@@ -903,9 +1024,14 @@
                 if (audioContext && audioContext.state === 'suspended') {
                     audioContext.resume();
                 }
+                // Start background music if game is active
+                if (gameActive) {
+                    playBackgroundMusic();
+                }
             } else {
                 soundToggle.textContent = '🔇';
                 soundToggle.classList.add('muted');
+                stopBackgroundMusic();
             }
         });
         
@@ -970,12 +1096,16 @@
                 if (soundEnabled && audioContext && audioContext.state === 'suspended') {
                     audioContext.resume();
                 }
+                if (soundEnabled) {
+                    playBackgroundMusic();
+                }
             } else {
                 // Pause game
                 gamePaused = true;
                 savedTimeLeft = timeLeft;
                 clearInterval(timer);
                 pauseBtn.textContent = 'Resume';
+                stopBackgroundMusic();
             }
         }
         
