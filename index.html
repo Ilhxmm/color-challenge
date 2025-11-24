@@ -17,20 +17,20 @@
         }
         
         body {
-            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            background: linear-gradient(135deg, #2c3e50, #34495e, #2c3e50);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 10px;
             overflow: hidden;
-            color: #e0e0ff;
+            color: #ecf0f1;
             -webkit-text-size-adjust: 100%;
             -webkit-tap-highlight-color: transparent;
         }
         
         .game-container {
-            background: rgba(15, 15, 35, 0.95);
+            background: rgba(44, 62, 80, 0.95);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             padding: 20px;
@@ -39,7 +39,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            border: 2px solid rgba(100, 150, 255, 0.2);
+            border: 2px solid rgba(189, 195, 199, 0.3);
             display: flex;
             flex-direction: column;
             min-height: 95vh;
@@ -53,24 +53,14 @@
         h1 {
             font-size: 1.8rem;
             margin-bottom: 5px;
-            background: linear-gradient(45deg, #00a8ff, #ff6b9c, #7afcff, #ff7eb3);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 300% 300%;
-            animation: gradientShift 8s ease infinite;
+            color: #ecf0f1;
             font-weight: 800;
             letter-spacing: -0.5px;
-            text-shadow: 0 0 8px rgba(122, 252, 255, 0.2);
-        }
-        
-        @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            text-shadow: 0 0 8px rgba(236, 240, 241, 0.3);
         }
         
         .subtitle {
-            color: #a0b0ff;
+            color: #bdc3c7;
             font-size: 1rem;
             font-weight: 600;
             margin-bottom: 10px;
@@ -88,21 +78,21 @@
             border-radius: 25px;
             font-weight: 700;
             font-size: 1rem;
-            box-shadow: 0 3px 8px rgba(0, 168, 255, 0.3);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
             animation: float 3s ease-in-out infinite;
             color: white;
         }
         
         .name-badge.ilham {
-            background: linear-gradient(45deg, #00a8ff, #00d2ff);
+            background: #3498db;
             font-weight: 800;
             letter-spacing: 0.5px;
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
         
         .name-badge.sanjay {
-            background: linear-gradient(45deg, #ff6b9c, #ff7eb3);
-            box-shadow: 0 3px 8px rgba(255, 107, 156, 0.3);
+            background: #e74c3c;
+            box-shadow: 0 3px 8px rgba(231, 76, 60, 0.3);
             animation-delay: 1.5s;
         }
         
@@ -123,61 +113,61 @@
             padding: 10px 18px;
             border: none;
             border-radius: 25px;
-            background: rgba(40, 40, 70, 0.6);
-            color: #d0d0ff;
+            background: rgba(52, 73, 94, 0.7);
+            color: #ecf0f1;
             font-size: 0.95rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s ease;
-            border: 2px solid rgba(100, 120, 200, 0.3);
+            border: 2px solid rgba(189, 195, 199, 0.3);
             flex: 1;
             min-width: 120px;
             max-width: 180px;
         }
         
         .mode-btn.active {
-            background: linear-gradient(45deg, #00a8ff, #00d2ff);
+            background: #3498db;
             color: white;
-            border-color: #00a8ff;
-            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.4);
+            border-color: #2980b9;
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
         }
         
         .mode-btn.active.word {
-            background: linear-gradient(45deg, #ff6b9c, #ff7eb3);
-            border-color: #ff6b9c;
-            box-shadow: 0 4px 12px rgba(255, 107, 156, 0.4);
+            background: #e74c3c;
+            border-color: #c0392b;
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
         }
         
         .mode-btn:hover {
             transform: translateY(-2px);
-            background: rgba(50, 50, 80, 0.7);
+            background: rgba(63, 81, 101, 0.8);
         }
         
         .instructions-box {
-            background: rgba(25, 25, 50, 0.7);
+            background: rgba(52, 73, 94, 0.7);
             padding: 15px;
             border-radius: 14px;
             margin: 15px 0;
-            color: #c0c0ff;
+            color: #bdc3c7;
             font-size: 0.9rem;
             line-height: 1.5;
-            border: 2px solid rgba(100, 150, 255, 0.2);
+            border: 2px solid rgba(189, 195, 199, 0.2);
         }
         
         .keyboard-hint {
-            background: rgba(30, 30, 60, 0.7);
+            background: rgba(63, 81, 101, 0.7);
             padding: 8px;
             border-radius: 8px;
             margin-top: 8px;
             font-size: 0.8rem;
-            color: #ffd166;
+            color: #f1c40f;
             display: flex;
             justify-content: center;
             gap: 10px;
         }
         
         .key-hint {
-            background: rgba(50, 50, 100, 0.5);
+            background: rgba(75, 91, 110, 0.5);
             padding: 2px 6px;
             border-radius: 5px;
             font-weight: bold;
@@ -187,14 +177,14 @@
             display: flex;
             justify-content: space-around;
             margin: 15px 0;
-            background: rgba(20, 20, 45, 0.7);
+            background: rgba(52, 73, 94, 0.7);
             padding: 12px;
             border-radius: 16px;
-            border: 2px solid rgba(100, 150, 255, 0.2);
+            border: 2px solid rgba(189, 195, 199, 0.2);
         }
         
         .stat-box {
-            color: #a0b0ff;
+            color: #bdc3c7;
             font-weight: 600;
             font-size: 0.85rem;
         }
@@ -202,27 +192,27 @@
         .stat-value {
             font-size: 1.6rem;
             font-weight: 800;
-            color: #00a8ff;
+            color: #3498db;
             margin-top: 3px;
-            text-shadow: 0 0 6px rgba(0, 168, 255, 0.3);
+            text-shadow: 0 0 6px rgba(52, 152, 219, 0.3);
         }
         
         .stat-value.word {
-            color: #ff6b9c;
-            text-shadow: 0 0 6px rgba(255, 107, 156, 0.3);
+            color: #e74c3c;
+            text-shadow: 0 0 6px rgba(231, 76, 60, 0.3);
         }
         
         .game-area {
             position: relative;
             height: 160px;
             margin: 20px 0;
-            background: rgba(10, 10, 30, 0.7);
+            background: rgba(39, 55, 70, 0.7);
             border-radius: 16px;
             overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 2px dashed rgba(100, 150, 255, 0.2);
+            border: 2px dashed rgba(189, 195, 199, 0.2);
             flex: 1;
             min-height: 140px;
         }
@@ -235,6 +225,7 @@
             text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
             max-width: 90%;
             word-break: break-all;
+            color: #ecf0f1;
         }
         
         .options {
@@ -255,7 +246,7 @@
             transition: all 0.2s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
             position: relative;
-            border: 2px solid rgba(200, 200, 255, 0.2);
+            border: 2px solid rgba(236, 240, 241, 0.3);
             transform: scale(0.95);
             touch-action: manipulation;
         }
@@ -264,7 +255,7 @@
             transform: scale(1.15);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
             z-index: 2;
-            border-color: #ffd166;
+            border-color: #f1c40f;
         }
         
         .color-option::after {
@@ -273,7 +264,7 @@
             bottom: -25px;
             left: 50%;
             transform: translateX(-50%);
-            color: #e0e0ff;
+            color: #ecf0f1;
             font-size: 0.75rem;
             font-weight: 700;
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
@@ -303,28 +294,28 @@
             align-items: center;
             font-weight: bold;
             font-size: 0.8rem;
-            border: 2px solid #ffd166;
+            border: 2px solid #f1c40f;
         }
         
         .timer-bar {
             height: 10px;
-            background: rgba(40, 40, 70, 0.6);
+            background: rgba(63, 81, 101, 0.6);
             border-radius: 5px;
             margin: 20px 0;
             overflow: hidden;
-            border: 2px solid rgba(100, 150, 255, 0.2);
+            border: 2px solid rgba(189, 195, 199, 0.2);
         }
         
         .timer-fill {
             height: 100%;
             width: 100%;
-            background: linear-gradient(90deg, #00a8ff, #00d2ff);
+            background: linear-gradient(90deg, #3498db, #2980b9);
             border-radius: 5px;
             transition: width 0.1s linear;
         }
         
         .timer-fill.word {
-            background: linear-gradient(90deg, #ff6b9c, #ff7eb3);
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
         }
         
         .controls {
@@ -348,15 +339,15 @@
         }
         
         .btn.start {
-            background: linear-gradient(45deg, #00a8ff, #00d2ff);
+            background: #3498db;
             color: white;
-            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
         }
         
         .btn.pause {
-            background: linear-gradient(45deg, #ff6b9c, #ff7eb3);
+            background: #e74c3c;
             color: white;
-            box-shadow: 0 4px 12px rgba(255, 107, 156, 0.4);
+            box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
         }
         
         .btn:hover {
@@ -364,11 +355,11 @@
         }
         
         .btn.start:hover {
-            box-shadow: 0 6px 16px rgba(0, 168, 255, 0.6);
+            box-shadow: 0 6px 16px rgba(52, 152, 219, 0.6);
         }
         
         .btn.pause:hover {
-            box-shadow: 0 6px 16px rgba(255, 107, 156, 0.6);
+            box-shadow: 0 6px 16px rgba(231, 76, 60, 0.6);
         }
         
         .btn:active {
@@ -381,7 +372,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(10, 10, 30, 0.95);
+            background: rgba(39, 55, 70, 0.95);
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -402,41 +393,41 @@
         .game-over h2 {
             font-size: 2.2rem;
             margin-bottom: 15px;
-            color: #00a8ff;
+            color: #3498db;
             font-weight: 800;
-            text-shadow: 0 0 12px rgba(0, 168, 255, 0.4);
+            text-shadow: 0 0 12px rgba(52, 152, 219, 0.4);
         }
         
         .final-score {
-            color: #c0c0ff;
+            color: #bdc3c7;
             font-size: 1.5rem;
             margin: 12px 0;
             font-weight: 700;
         }
         
         .final-score span {
-            color: #00a8ff;
+            color: #3498db;
             font-weight: 800;
         }
         
         .final-score.high {
-            color: #ff6b9c;
+            color: #e74c3c;
         }
         
         .mode-display {
-            background: rgba(25, 25, 50, 0.7);
+            background: rgba(52, 73, 94, 0.7);
             padding: 8px 16px;
             border-radius: 25px;
             font-weight: 700;
-            color: #00a8ff;
+            color: #3498db;
             margin: 15px 0;
             font-size: 1rem;
-            border: 2px solid rgba(100, 150, 255, 0.2);
+            border: 2px solid rgba(189, 195, 199, 0.2);
         }
         
         .mode-display.word {
-            color: #ff6b9c;
-            border-color: rgba(255, 107, 156, 0.3);
+            color: #e74c3c;
+            border-color: rgba(231, 76, 60, 0.3);
         }
         
         .confetti {
@@ -447,13 +438,13 @@
         }
         
         .high-score-display {
-            background: rgba(30, 30, 60, 0.7);
+            background: rgba(63, 81, 101, 0.7);
             padding: 10px;
             border-radius: 10px;
             margin: 12px 0;
             font-weight: 700;
-            color: #ffd166;
-            border-left: 3px solid #ffd166;
+            color: #f1c40f;
+            border-left: 3px solid #f1c40f;
             font-size: 0.95rem;
         }
         
@@ -461,12 +452,12 @@
             position: absolute;
             top: 15px;
             right: 15px;
-            background: rgba(40, 40, 70, 0.7);
+            background: rgba(63, 81, 101, 0.7);
             border: none;
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            color: #a0d2eb;
+            color: #bdc3c7;
             font-size: 1.1rem;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -477,38 +468,21 @@
         }
         
         .sound-toggle.muted {
-            color: #ff6b9c;
+            color: #e74c3c;
         }
         
         .made-by {
-            background: linear-gradient(45deg, #00a8ff, #ff6b9c);
+            background: linear-gradient(45deg, #3498db, #e74c3c);
             color: white;
             padding: 10px;
             border-radius: 12px;
             margin-top: auto;
             font-weight: 700;
             font-size: 0.95rem;
-            box-shadow: 0 3px 10px rgba(0, 168, 255, 0.3);
-            animation: pulse 2s infinite;
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
             position: relative;
             overflow: hidden;
             margin-bottom: 5px;
-        }
-        
-        .made-by::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            z-index: -1;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
         }
         
         /* Desktop improvements */
@@ -554,7 +528,7 @@
         
         <div class="header">
             <h1>Ilham & Sanjay Color Challenge</h1>
-            <div class="subtitle">A fun color matching game for everyone!</div>
+            <div class="subtitle">A humble color matching game for everyone!</div>
             
             <div class="names">
                 <div class="name-badge ilham">Ilham</div>
@@ -571,7 +545,7 @@
         
         <div class="instructions-box" id="instructions">
             <p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p>
-            <p>Example: If "RED" appears in <span style="color: #00ff00; font-weight: bold">green</span> text, tap the GREEN circle.</p>
+            <p>Example: If "RED" appears in <span style="color: #2ecc71; font-weight: bold">green</span> text, tap the GREEN circle.</p>
             <div class="keyboard-hint">
                 <span>Play with keys:</span>
                 <span class="key-hint">1</span>
@@ -665,18 +639,14 @@
         let isBackgroundMusicPlaying = false;
         let backgroundMusicSource = null;
         
-        // SIMPLE, UNIVERSAL COLORS THAT EVERYONE KNOWS
-        const colors = ['Red', 'Blue', 'Green', 'Yellow', 'Orange', 'Purple', 'Pink', 'Black'];
+        // SIMPLE, HUMBLE, IDENTICAL COLORS
+        const colors = ['Red', 'Blue', 'Green', 'Yellow'];
         
         const colorValues = {
-            'Red': '#e53935',
-            'Blue': '#1e88e5',
-            'Green': '#43a047',
-            'Yellow': '#ffeb3b',
-            'Orange': '#fb8c00',
-            'Purple': '#8e24aa',
-            'Pink': '#e91e63',
-            'Black': '#212121'
+            'Red': '#e74c3c',      // Soft red
+            'Blue': '#3498db',     // Soft blue  
+            'Green': '#2ecc71',    // Soft green
+            'Yellow': '#f1c40f'    // Soft yellow
         };
         
         // Game variables
@@ -1176,12 +1146,12 @@
             if (currentMode === 'text-color') {
                 modeDisplay.textContent = 'Mode: Match the TEXT COLOR';
                 modeDisplay.className = 'mode-display';
-                instructions.innerHTML = '<p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p><p>Example: If "RED" appears in <span style="color: #00ff00; font-weight: bold">green</span> text, tap the GREEN circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
+                instructions.innerHTML = '<p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p><p>Example: If "RED" appears in <span style="color: #2ecc71; font-weight: bold">green</span> text, tap the GREEN circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
                 timerFill.className = 'timer-fill';
             } else {
                 modeDisplay.textContent = 'Mode: Match the WORD MEANING';
                 modeDisplay.className = 'mode-display word';
-                instructions.innerHTML = '<p><strong>Word Meaning Mode</strong>: Tap the circle that matches what the WORD says.</p><p>Example: If "RED" appears in <span style="color: #00ff00; font-weight: bold">green</span> text, tap the RED circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
+                instructions.innerHTML = '<p><strong>Word Meaning Mode</strong>: Tap the circle that matches what the WORD says.</p><p>Example: If "RED" appears in <span style="color: #2ecc71; font-weight: bold">green</span> text, tap the RED circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
                 timerFill.className = 'timer-fill word';
             }
         }
@@ -1237,11 +1207,11 @@
             let options = [correctAnswer];
             let otherColors = colors.filter(color => color !== correctAnswer);
             
-            // Add 3 random wrong colors
-            for (let i = 0; i < 3; i++) {
-                let randomIndex = Math.floor(Math.random() * otherColors.length);
-                options.push(otherColors[randomIndex]);
-                otherColors.splice(randomIndex, 1);
+            // Add remaining colors to make 4 total
+            for (let color of otherColors) {
+                if (options.length < 4) {
+                    options.push(color);
+                }
             }
             
             // Shuffle options
@@ -1253,9 +1223,6 @@
                 const option = document.createElement('div');
                 option.className = 'color-option';
                 option.style.backgroundColor = colorValues[color];
-                if (color === 'Yellow') {
-                    option.style.border = '2px solid #555555';
-                }
                 option.dataset.color = color;
                 option.dataset.index = index;
                 option.addEventListener('click', checkAnswer);
@@ -1463,9 +1430,6 @@
                 }
             }
             
-            // Fallback for white/black which might not have # in some browsers
-            if (hex === 'black' || hex === '#000000' || hex === '#212121') return 'Black';
-            
             return null;
         }
         
@@ -1493,7 +1457,7 @@
         
         // Create confetti effect
         function createConfetti() {
-            const colors = ['#e53935', '#1e88e5', '#43a047', '#ffeb3b', '#fb8c00', '#e91e63'];
+            const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f'];
             const gameArea = document.querySelector('.game-container');
             
             for (let i = 0; i < 100; i++) {
