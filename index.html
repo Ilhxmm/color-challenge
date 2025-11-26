@@ -123,6 +123,7 @@
             flex: 1;
             min-width: 120px;
             max-width: 180px;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .mode-btn.active {
@@ -152,25 +153,6 @@
             font-size: 0.9rem;
             line-height: 1.5;
             border: 2px solid rgba(189, 195, 199, 0.2);
-        }
-        
-        .keyboard-hint {
-            background: rgba(63, 81, 101, 0.7);
-            padding: 8px;
-            border-radius: 8px;
-            margin-top: 8px;
-            font-size: 0.8rem;
-            color: #f1c40f;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .key-hint {
-            background: rgba(75, 91, 110, 0.5);
-            padding: 2px 6px;
-            border-radius: 5px;
-            font-weight: bold;
         }
         
         .stats {
@@ -249,6 +231,8 @@
             border: 2px solid rgba(236, 240, 241, 0.3);
             transform: scale(0.95);
             touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
         }
         
         .color-option:hover, .color-option.selected {
@@ -277,24 +261,6 @@
         /* Hide color names in Word Meaning mode */
         .word-meaning-mode .color-option::after {
             display: none;
-        }
-        
-        .key-number {
-            position: absolute;
-            top: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-            font-size: 0.8rem;
-            border: 2px solid #f1c40f;
         }
         
         .timer-bar {
@@ -336,6 +302,7 @@
             transition: all 0.2s ease;
             border: none;
             min-width: 120px;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .btn.start {
@@ -430,13 +397,6 @@
             border-color: rgba(231, 76, 60, 0.3);
         }
         
-        .confetti {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            opacity: 0;
-        }
-        
         .high-score-display {
             background: rgba(63, 81, 101, 0.7);
             padding: 10px;
@@ -465,6 +425,7 @@
             justify-content: center;
             align-items: center;
             z-index: 5;
+            -webkit-tap-highlight-color: transparent;
         }
         
         .sound-toggle.muted {
@@ -503,22 +464,10 @@
             .color-word { font-size: 4.8rem; }
             .color-option { width: 75px; height: 75px; }
             .color-option::after { font-size: 0.85rem; bottom: -30px; }
-            .key-number { width: 25px; height: 25px; top: -20px; }
             .btn { padding: 12px 25px; font-size: 1.1rem; min-width: 140px; }
             .game-over h2 { font-size: 2.8rem; }
             .final-score { font-size: 1.8rem; }
             .made-by { padding: 12px; font-size: 1.1rem; }
-        }
-        
-        /* Hide keyboard hint on mobile */
-        @media (max-width: 767px) {
-            .keyboard-hint {
-                display: none;
-            }
-            
-            .key-number {
-                display: none;
-            }
         }
     </style>
 </head>
@@ -546,13 +495,6 @@
         <div class="instructions-box" id="instructions">
             <p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p>
             <p>Example: If "RED" appears in <span style="color: #2ecc71; font-weight: bold">green</span> text, tap the GREEN circle.</p>
-            <div class="keyboard-hint">
-                <span>Play with keys:</span>
-                <span class="key-hint">1</span>
-                <span class="key-hint">2</span>
-                <span class="key-hint">3</span>
-                <span class="key-hint">4</span>
-            </div>
         </div>
         
         <div class="stats">
@@ -701,337 +643,108 @@
             }
         }
         
-        // Create high-quality sound buffers
+        // Create high-quality sound buffers (simplified version)
         async function createSoundBuffers() {
-            // Correct Answer Sound - Crystalline chime
-            soundBuffers.correct = createBellSound(880, 0.3, 0.6);
-            
-            // Wrong Answer Sound - Gentle error tone
-            soundBuffers.wrong = createErrorSound();
-            
-            // Level Up Sound - Ascending arpeggio
-            soundBuffers.levelUp = createLevelUpSound();
-            
-            // Game Start Sound - Bright, energetic sequence
-            soundBuffers.gameStart = createGameStartSound();
-            
-            // Game Over Sound - Gentle, melancholic
-            soundBuffers.gameOver = createGameOverSound();
-            
-            // Timer Warning Sound - Subtle alert
-            soundBuffers.timerWarning = createTimerWarningSound();
+            // We'll use simple oscillator-based sounds for better mobile compatibility
+            soundBuffers.correct = { frequency: 880, duration: 200, type: 'sine', volume: 0.7 };
+            soundBuffers.wrong = { frequency: 220, duration: 300, type: 'sawtooth', volume: 0.8 };
+            soundBuffers.levelUp = { frequency: 784, duration: 150, type: 'sine', volume: 0.9, sequence: [784, 880, 988] };
+            soundBuffers.gameStart = { frequency: 392, duration: 200, type: 'sine', volume: 1.0, sequence: [392, 523, 659] };
+            soundBuffers.gameOver = { frequency: 131, duration: 400, type: 'sine', volume: 0.8, sequence: [131, 110, 98] };
+            soundBuffers.timerWarning = { frequency: 880, duration: 100, type: 'square', volume: 0.9 };
         }
         
         // Create background music
         function createBackgroundMusic() {
-            const sampleRate = audioContext.sampleRate;
-            const duration = 8.0; // 8 seconds loop
-            const length = Math.floor(duration * sampleRate);
-            const buffer = audioContext.createBuffer(1, length, sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            // Ambient background music with gentle arpeggios
-            for (let i = 0; i < length; i++) {
-                const t = i / sampleRate;
-                const cycle = t % 4; // 4-second cycle within 8-second loop
-                
-                let amplitude = 0;
-                
-                // Gentle arpeggio pattern
-                if (cycle < 0.5) {
-                    // C4
-                    amplitude = Math.sin(2 * Math.PI * 261.63 * t) * Math.exp(-cycle * 2);
-                } else if (cycle < 1.0) {
-                    // E4
-                    amplitude = Math.sin(2 * Math.PI * 329.63 * t) * Math.exp(-(cycle - 0.5) * 2);
-                } else if (cycle < 1.5) {
-                    // G4
-                    amplitude = Math.sin(2 * Math.PI * 392 * t) * Math.exp(-(cycle - 1.0) * 2);
-                } else if (cycle < 2.0) {
-                    // C5
-                    amplitude = Math.sin(2 * Math.PI * 523.25 * t) * Math.exp(-(cycle - 1.5) * 2);
-                } else if (cycle < 2.5) {
-                    // A4
-                    amplitude = Math.sin(2 * Math.PI * 440 * t) * Math.exp(-(cycle - 2.0) * 2);
-                } else if (cycle < 3.0) {
-                    // F4
-                    amplitude = Math.sin(2 * Math.PI * 349.23 * t) * Math.exp(-(cycle - 2.5) * 2);
-                } else if (cycle < 3.5) {
-                    // D4
-                    amplitude = Math.sin(2 * Math.PI * 293.66 * t) * Math.exp(-(cycle - 3.0) * 2);
-                } else {
-                    // G4
-                    amplitude = Math.sin(2 * Math.PI * 392 * t) * Math.exp(-(cycle - 3.5) * 2);
-                }
-                
-                // Very low volume for background music
-                data[i] = amplitude * 0.15;
-            }
-            
-            backgroundMusic = buffer;
+            // Simplified background music creation
         }
         
-        // Create a beautiful bell-like sound
-        function createBellSound(frequency, duration, volume = 0.5) {
-            const sampleRate = audioContext.sampleRate;
-            const length = Math.floor(duration * sampleRate);
-            const buffer = audioContext.createBuffer(1, length, sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            // Bell sound with multiple harmonics and exponential decay
-            for (let i = 0; i < length; i++) {
-                const t = i / sampleRate;
-                const decay = Math.exp(-t * 8);
-                const harmonic1 = Math.sin(2 * Math.PI * frequency * t) * decay;
-                const harmonic2 = Math.sin(2 * Math.PI * frequency * 1.5 * t) * decay * 0.6;
-                const harmonic3 = Math.sin(2 * Math.PI * frequency * 2.2 * t) * decay * 0.4;
-                const harmonic4 = Math.sin(2 * Math.PI * frequency * 3.1 * t) * decay * 0.3;
-                data[i] = (harmonic1 + harmonic2 + harmonic3 + harmonic4) * volume * 0.3;
-            }
-            
-            return buffer;
-        }
-        
-        // Create a gentle error sound
-        function createErrorSound() {
-            const sampleRate = audioContext.sampleRate;
-            const duration = 0.4;
-            const length = Math.floor(duration * sampleRate);
-            const buffer = audioContext.createBuffer(1, length, sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            // Gentle descending tone with vibrato
-            for (let i = 0; i < length; i++) {
-                const t = i / sampleRate;
-                const frequency = 350 - (t / duration) * 150; // Descend from 350Hz to 200Hz
-                const vibrato = 1 + 0.2 * Math.sin(2 * Math.PI * 6 * t);
-                const decay = Math.exp(-t * 4);
-                data[i] = Math.sin(2 * Math.PI * frequency * vibrato * t) * decay * 0.4;
-            }
-            
-            return buffer;
-        }
-        
-        // Create an ascending level up sound
-        function createLevelUpSound() {
-            const sampleRate = audioContext.sampleRate;
-            const duration = 0.6;
-            const length = Math.floor(duration * sampleRate);
-            const buffer = audioContext.createBuffer(1, length, sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            // Three ascending notes with bell-like quality
-            const note1End = Math.floor(0.15 * sampleRate);
-            const note2End = Math.floor(0.35 * sampleRate);
-            const note3End = length;
-            
-            for (let i = 0; i < length; i++) {
-                const t = i / sampleRate;
-                let amplitude = 0;
-                
-                if (i < note1End) {
-                    // First note: C5 (523.25Hz)
-                    const localT = t;
-                    const decay = Math.exp(-localT * 10);
-                    amplitude = Math.sin(2 * Math.PI * 523.25 * localT) * decay;
-                } else if (i < note2End) {
-                    // Second note: E5 (659.25Hz)
-                    const localT = t - 0.15;
-                    const decay = Math.exp(-localT * 10);
-                    amplitude = Math.sin(2 * Math.PI * 659.25 * localT) * decay;
-                } else {
-                    // Third note: G5 (783.99Hz)
-                    const localT = t - 0.35;
-                    const decay = Math.exp(-localT * 10);
-                    amplitude = Math.sin(2 * Math.PI * 783.99 * localT) * decay;
-                }
-                
-                data[i] = amplitude * 0.5;
-            }
-            
-            return buffer;
-        }
-        
-        // Create a bright game start sound
-        function createGameStartSound() {
-            const sampleRate = audioContext.sampleRate;
-            const duration = 0.8;
-            const length = Math.floor(duration * sampleRate);
-            const buffer = audioContext.createBuffer(1, length, sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            // Three bright notes with reverb-like tail
-            const note1End = Math.floor(0.2 * sampleRate);
-            const note2End = Math.floor(0.45 * sampleRate);
-            const note3End = Math.floor(0.7 * sampleRate);
-            
-            for (let i = 0; i < length; i++) {
-                const t = i / sampleRate;
-                let amplitude = 0;
-                
-                if (i < note1End) {
-                    // G4 (392Hz)
-                    const localT = t;
-                    const decay = Math.exp(-localT * 6);
-                    amplitude = Math.sin(2 * Math.PI * 392 * localT) * decay;
-                } else if (i < note2End) {
-                    // C5 (523.25Hz)
-                    const localT = t - 0.2;
-                    const decay = Math.exp(-localT * 6);
-                    amplitude = Math.sin(2 * Math.PI * 523.25 * localT) * decay;
-                } else if (i < note3End) {
-                    // E5 (659.25Hz)
-                    const localT = t - 0.45;
-                    const decay = Math.exp(-localT * 6);
-                    amplitude = Math.sin(2 * Math.PI * 659.25 * localT) * decay;
-                } else {
-                    // Reverb tail
-                    const localT = t - 0.7;
-                    const decay = Math.exp(-localT * 12);
-                    amplitude = (Math.random() * 2 - 1) * decay * 0.1;
-                }
-                
-                data[i] = amplitude * 0.6;
-            }
-            
-            return buffer;
-        }
-        
-        // Create a gentle game over sound
-        function createGameOverSound() {
-            const sampleRate = audioContext.sampleRate;
-            const duration = 1.0;
-            const length = Math.floor(duration * sampleRate);
-            const buffer = audioContext.createBuffer(1, length, sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            // Gentle descending chords
-            for (let i = 0; i < length; i++) {
-                const t = i / sampleRate;
-                const progress = t / duration;
-                const baseFreq = 130.81; // C3
-                
-                // Chord progression: C - Am - F - G
-                let freq1, freq2, freq3;
-                if (progress < 0.25) {
-                    // C major: C3, E3, G3
-                    freq1 = baseFreq;
-                    freq2 = baseFreq * 1.2599; // E
-                    freq3 = baseFreq * 1.4983; // G
-                } else if (progress < 0.5) {
-                    // A minor: A2, C3, E3
-                    freq1 = baseFreq * 0.8909; // A2
-                    freq2 = baseFreq;
-                    freq3 = baseFreq * 1.2599;
-                } else if (progress < 0.75) {
-                    // F major: F2, A2, C3
-                    freq1 = baseFreq * 0.75; // F2
-                    freq2 = baseFreq * 0.8909;
-                    freq3 = baseFreq;
-                } else {
-                    // G major: G2, B2, D3
-                    freq1 = baseFreq * 0.8333; // G2
-                    freq2 = baseFreq * 0.9439; // B2
-                    freq3 = baseFreq * 1.1225; // D3
-                }
-                
-                const decay = Math.exp(-t * 2);
-                const note1 = Math.sin(2 * Math.PI * freq1 * t) * decay;
-                const note2 = Math.sin(2 * Math.PI * freq2 * t) * decay * 0.7;
-                const note3 = Math.sin(2 * Math.PI * freq3 * t) * decay * 0.5;
-                
-                data[i] = (note1 + note2 + note3) * 0.4;
-            }
-            
-            return buffer;
-        }
-        
-        // Create a subtle timer warning sound
-        function createTimerWarningSound() {
-            const sampleRate = audioContext.sampleRate;
-            const duration = 0.15;
-            const length = Math.floor(duration * sampleRate);
-            const buffer = audioContext.createBuffer(1, length, sampleRate);
-            const data = buffer.getChannelData(0);
-            
-            // Short, subtle alert
-            for (let i = 0; i < length; i++) {
-                const t = i / sampleRate;
-                const decay = Math.exp(-t * 20);
-                data[i] = Math.sin(2 * Math.PI * 880 * t) * decay * 0.2;
-            }
-            
-            return buffer;
-        }
-        
-        // Play sound from buffer
-        function playSoundFromBuffer(buffer, volume = 1) {
-            if (!soundEnabled || !audioContext || !buffer) return;
+        // Play sound function (mobile-optimized)
+        function playSound(soundConfig) {
+            if (!soundEnabled || !audioContext) return;
             
             try {
-                const source = audioContext.createBufferSource();
-                const gainNode = audioContext.createGain();
+                // Resume audio context if suspended (common on mobile)
+                if (audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
                 
-                source.buffer = buffer;
-                gainNode.gain.value = volume;
-                
-                source.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                source.start();
+                if (soundConfig.sequence) {
+                    // Play sequence of notes
+                    let timeOffset = 0;
+                    soundConfig.sequence.forEach((freq, index) => {
+                        setTimeout(() => {
+                            playSingleNote(freq, soundConfig.duration, soundConfig.type, soundConfig.volume);
+                        }, timeOffset);
+                        timeOffset += soundConfig.duration + 50;
+                    });
+                } else {
+                    // Play single note
+                    playSingleNote(soundConfig.frequency, soundConfig.duration, soundConfig.type, soundConfig.volume);
+                }
             } catch (e) {
                 console.log("Error playing sound:", e);
             }
         }
         
-        // Play background music loop
-        function playBackgroundMusic() {
-            if (!soundEnabled || !audioContext || !backgroundMusic || isBackgroundMusicPlaying) return;
-            
-            const source = audioContext.createBufferSource();
+        // Play a single note
+        function playSingleNote(frequency, duration, type, volume) {
+            const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
             
-            source.buffer = backgroundMusic;
-            source.loop = true;
-            gainNode.gain.value = 0.3; // Very low volume
+            oscillator.type = type;
+            oscillator.frequency.value = frequency;
+            gainNode.gain.value = volume;
             
-            source.connect(gainNode);
+            oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
             
-            source.start();
+            const now = audioContext.currentTime;
+            oscillator.start(now);
+            oscillator.stop(now + duration / 1000);
+        }
+        
+        // Play background music (simplified)
+        function playBackgroundMusic() {
+            if (!soundEnabled || !audioContext || isBackgroundMusicPlaying) return;
+            
+            // Create simple background music loop
             isBackgroundMusicPlaying = true;
             
-            // Store reference to stop later
-            backgroundMusicSource = source;
+            function playNoteSequence() {
+                if (!isBackgroundMusicPlaying || !soundEnabled) return;
+                
+                const notes = [261.63, 329.63, 392, 523.25, 440, 349.23, 293.66, 392];
+                const noteIndex = Math.floor(Math.random() * notes.length);
+                playSingleNote(notes[notes.length - 1], 300, 'sine', 0.15);
+                
+                setTimeout(playNoteSequence, 1000);
+            }
+            
+            // Start the sequence after a short delay
+            setTimeout(playNoteSequence, 1000);
         }
         
         // Stop background music
         function stopBackgroundMusic() {
-            if (backgroundMusicSource) {
-                try {
-                    backgroundMusicSource.stop();
-                } catch (e) {
-                    // Ignore if already stopped
-                }
-                isBackgroundMusicPlaying = false;
-            }
+            isBackgroundMusicPlaying = false;
         }
         
         // Sound effects
         function playCorrectSound() {
-            playSoundFromBuffer(soundBuffers.correct, 0.7);
+            playSound(soundBuffers.correct);
         }
         
         function playWrongSound() {
-            playSoundFromBuffer(soundBuffers.wrong, 0.8);
+            playSound(soundBuffers.wrong);
         }
         
         function playLevelUpSound() {
-            playSoundFromBuffer(soundBuffers.levelUp, 0.9);
+            playSound(soundBuffers.levelUp);
         }
         
         function playGameStartSound() {
-            playSoundFromBuffer(soundBuffers.gameStart, 1.0);
+            playSound(soundBuffers.gameStart);
             if (soundEnabled) {
                 setTimeout(playBackgroundMusic, 500);
             }
@@ -1039,11 +752,11 @@
         
         function playGameOverSound() {
             stopBackgroundMusic();
-            playSoundFromBuffer(soundBuffers.gameOver, 0.8);
+            playSound(soundBuffers.gameOver);
         }
         
         function playTimerWarningSound() {
-            playSoundFromBuffer(soundBuffers.timerWarning, 0.9);
+            playSound(soundBuffers.timerWarning);
         }
         
         // Sound toggle
@@ -1052,10 +765,6 @@
             if (soundEnabled) {
                 soundToggle.textContent = '🔊';
                 soundToggle.classList.remove('muted');
-                // Resume audio context if needed
-                if (audioContext && audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
                 // Start background music if game is active
                 if (gameActive) {
                     playBackgroundMusic();
@@ -1125,9 +834,6 @@
                 startTimer();
                 pauseBtn.textContent = 'Pause';
                 
-                if (soundEnabled && audioContext && audioContext.state === 'suspended') {
-                    audioContext.resume();
-                }
                 if (soundEnabled) {
                     playBackgroundMusic();
                 }
@@ -1146,12 +852,12 @@
             if (currentMode === 'text-color') {
                 modeDisplay.textContent = 'Mode: Match the TEXT COLOR';
                 modeDisplay.className = 'mode-display';
-                instructions.innerHTML = '<p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p><p>Example: If "RED" appears in <span style="color: #2ecc71; font-weight: bold">green</span> text, tap the GREEN circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
+                instructions.innerHTML = '<p><strong>Text Color Mode</strong>: Tap the circle that matches the COLOR of the text.</p><p>Example: If "RED" appears in <span style="color: #2ecc71; font-weight: bold">green</span> text, tap the GREEN circle.</p>';
                 timerFill.className = 'timer-fill';
             } else {
                 modeDisplay.textContent = 'Mode: Match the WORD MEANING';
                 modeDisplay.className = 'mode-display word';
-                instructions.innerHTML = '<p><strong>Word Meaning Mode</strong>: Tap the circle that matches what the WORD says.</p><p>Example: If "RED" appears in <span style="color: #2ecc71; font-weight: bold">green</span> text, tap the RED circle.</p><div class="keyboard-hint"><span>Play with keys:</span><span class="key-hint">1</span><span class="key-hint">2</span><span class="key-hint">3</span><span class="key-hint">4</span></div>';
+                instructions.innerHTML = '<p><strong>Word Meaning Mode</strong>: Tap the circle that matches what the WORD says.</p><p>Example: If "RED" appears in <span style="color: #2ecc71; font-weight: bold">green</span> text, tap the RED circle.</p>';
                 timerFill.className = 'timer-fill word';
             }
         }
@@ -1225,23 +931,42 @@
                 option.style.backgroundColor = colorValues[color];
                 option.dataset.color = color;
                 option.dataset.index = index;
-                option.addEventListener('click', checkAnswer);
-                option.addEventListener('touchstart', (e) => {
-                    e.preventDefault(); // Prevent double tap zoom
-                });
-                colorOptions.appendChild(option);
                 
-                // Add key number indicator (only on desktop)
-                if (window.innerWidth > 767) {
-                    const keyNumber = document.createElement('div');
-                    keyNumber.className = 'key-number';
-                    keyNumber.textContent = index + 1;
-                    option.appendChild(keyNumber);
-                }
+                // Add both click and touch event listeners
+                option.addEventListener('click', checkAnswer);
+                option.addEventListener('touchstart', handleTouchStart, { passive: false });
+                option.addEventListener('touchend', handleTouchEnd, { passive: true });
+                
+                colorOptions.appendChild(option);
             });
             
             // Start timer
             startTimer();
+        }
+        
+        // Touch event handlers for mobile
+        function handleTouchStart(e) {
+            e.preventDefault(); // Prevent scrolling and other default behaviors
+            this.classList.add('selected');
+            
+            // Store touch start time for potential tap detection
+            this.touchStartTime = Date.now();
+        }
+        
+        function handleTouchEnd(e) {
+            e.preventDefault();
+            const touchEndTime = Date.now();
+            const touchDuration = touchEndTime - this.touchStartTime;
+            
+            // Only trigger if it's a quick tap (not a long press)
+            if (touchDuration < 300) {
+                checkAnswer.call(this, { target: this });
+            }
+            
+            // Remove visual feedback after a short delay
+            setTimeout(() => {
+                this.classList.remove('selected');
+            }, 100);
         }
         
         // Start the countdown timer
@@ -1334,81 +1059,6 @@
             }
         }
         
-        // Keyboard control handler (only on desktop)
-        function handleKeyPress(event) {
-            if (!gameActive || gamePaused || window.innerWidth <= 767) return;
-            
-            const key = event.key;
-            if (key >= '1' && key <= '4') {
-                const index = parseInt(key) - 1;
-                if (index < currentOptions.length) {
-                    const selectedColor = currentOptions[index];
-                    let correctAnswer;
-                    
-                    if (currentMode === 'text-color') {
-                        correctAnswer = getColorNameFromHex(colorWord.style.color);
-                    } else {
-                        correctAnswer = colorWord.textContent;
-                    }
-                    
-                    // Highlight selected option
-                    document.querySelectorAll('.color-option').forEach(option => {
-                        option.classList.remove('selected');
-                    });
-                    const selectedOption = document.querySelector(`.color-option[data-index="${index}"]`);
-                    if (selectedOption) {
-                        selectedOption.classList.add('selected');
-                    }
-                    
-                    if (selectedColor === correctAnswer) {
-                        // Correct answer
-                        playCorrectSound();
-                        score += level * 10;
-                        scoreDisplay.textContent = score;
-                        
-                        // Level up every 40 points
-                        let leveledUp = false;
-                        if (score >= level * 40 && level < 20) {
-                            level++;
-                            levelDisplay.textContent = level;
-                            leveledUp = true;
-                            // Play level up sound
-                            playLevelUpSound();
-                            // Update stat color based on mode
-                            if (currentMode === 'word-meaning') {
-                                levelDisplay.className = 'stat-value word';
-                                scoreDisplay.className = 'stat-value word';
-                            } else {
-                                levelDisplay.className = 'stat-value';
-                                scoreDisplay.className = 'stat-value';
-                            }
-                        }
-                        
-                        // Update best score
-                        if (score > bestScore) {
-                            bestScore = score;
-                            localStorage.setItem('bestScore', bestScore);
-                            bestDisplay.textContent = bestScore;
-                        }
-                        
-                        // Update high score
-                        if (score > highScore) {
-                            highScore = score;
-                            localStorage.setItem('highScore', highScore);
-                            highScoreDisplay.textContent = `High Score: ${highScore}`;
-                        }
-                        
-                        // Generate next challenge
-                        setTimeout(generateChallenge, 300);
-                    } else {
-                        // Wrong answer
-                        playWrongSound();
-                        gameOver();
-                    }
-                }
-            }
-        }
-        
         // Helper function to get color name from hex
         function getColorNameFromHex(hex) {
             // Handle different formats (some browsers return rgb)
@@ -1450,45 +1100,11 @@
             
             // Initialize mode buttons for game over screen
             initializeModeButtons();
-            
-            // Create confetti effect
-            createConfetti();
-        }
-        
-        // Create confetti effect
-        function createConfetti() {
-            const colors = ['#e74c3c', '#3498db', '#2ecc71', '#f1c40f'];
-            const gameArea = document.querySelector('.game-container');
-            
-            for (let i = 0; i < 100; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.top = Math.random() * 100 + '%';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                confetti.style.opacity = Math.random() * 0.8 + 0.2;
-                confetti.style.width = Math.random() * 8 + 4 + 'px';
-                confetti.style.height = Math.random() * 8 + 4 + 'px';
-                gameArea.appendChild(confetti);
-                
-                // Animate confetti
-                const animation = confetti.animate([
-                    { transform: 'translate(0, 0) rotate(0deg)', opacity: 1 },
-                    { transform: `translate(${Math.random() * 200 - 100}px, ${Math.random() * 200 + 100}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }
-                ], {
-                    duration: 2000 + Math.random() * 3000,
-                    easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
-                });
-                
-                animation.onfinish = () => confetti.remove();
-            }
         }
         
         // Event listeners
         startBtn.addEventListener('click', initGame);
         restartBtn.addEventListener('click', initGame);
-        document.addEventListener('keydown', handleKeyPress);
         
         // Initialize scores from localStorage
         bestDisplay.textContent = bestScore;
@@ -1500,8 +1116,14 @@
         // Initialize mode buttons on load
         initializeModeButtons();
         
-        // Prevent double tap zoom on mobile
+        // Ensure audio context is resumed on first user interaction (mobile requirement)
         document.addEventListener('touchstart', function() {
+            if (audioContext && audioContext.state === 'suspended') {
+                audioContext.resume();
+            }
+        }, { once: true });
+        
+        document.addEventListener('click', function() {
             if (audioContext && audioContext.state === 'suspended') {
                 audioContext.resume();
             }
